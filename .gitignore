@@ -1,2 +1,4 @@
 myenv/
 --pycache--/
+*.mp3
+*.srt
