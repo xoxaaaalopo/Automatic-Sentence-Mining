@@ -13,8 +13,8 @@ def generate_subtitles():
         return jsonify({'error': 'No URL provided'}), 400
     
     # Download audio
-    audio_file = 'audio.mp3'
-    subprocess.run(['yt-dlp', '-f', 'bestaudio', '-o', audio_file, url], check=True)
+    audio_file = 'audio.webm'
+    subprocess.run(['yt-dlp', '-f', 'bestaudio', '-o', audio_file, '--force-overwrites', url], check=True)
 
     # Generate subtitles
     subprocess.run(['whisper', audio_file, '--model', 'base', '--language', 'English',

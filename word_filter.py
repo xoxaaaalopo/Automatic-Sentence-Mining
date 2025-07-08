@@ -5,6 +5,7 @@ import re
 from nltk.stem import WordNetLemmatizer
 from collections import defaultdict
 import google.generativeai as genai
+import ast
 
 lemmatizer = WordNetLemmatizer()
 genai.configure(api_key='AIzaSyBNSyZBB2DVXIAIxeKXW1DbQQkldvRJ3M4')
@@ -198,7 +199,7 @@ def filter_with_gemini(potential_words):
         - Respond only with an array of words that you did not discard
         - Do NOT explain anything or add any extra text
 
-        Example response: ["decrepit", "levitate", "concoction"]
+        Example response: ['decrepit', 'levitate', 'concoction']
         """
     response = model.generate_content(prompt)
     
@@ -211,7 +212,7 @@ if __name__ == '__main__':
     input_file = 'known_words.txt'
     english_dict = load_dic_set('english_words.pkl')
 
-    filtered_sub_words = filter_sub_words('audio3.srt')
+    filtered_sub_words = filter_sub_words('audio.srt')
     filtered_user_words = filter_user_words(input_file, english_dict)
     # print(filtered_user_words)
 
@@ -220,8 +221,11 @@ if __name__ == '__main__':
     # print(words)
     # user_vocabulary_coverage = calculate_coverage_by_zipf(filtered_user_words, english_dict)
     
-    print(filter_with_gemini(words))
+    final_words = ast.literal_eval(filter_with_gemini(words))
+    final_sentences = find_sentences_with_potential_words('audio.srt', final_words)
 
+    with open('anki_data.pkl', 'wb') as file:
+        pickle.dump(final_sentences, file)
 
 
 
