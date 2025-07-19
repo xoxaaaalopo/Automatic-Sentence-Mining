@@ -8,7 +8,7 @@ import google.generativeai as genai
 import ast
 
 lemmatizer = WordNetLemmatizer()
-genai.configure(api_key='AIzaSyBNSyZBB2DVXIAIxeKXW1DbQQkldvRJ3M4')
+genai.configure(api_key='')
 model = genai.GenerativeModel(
     'gemini-2.5-flash-lite-preview-06-17', 
     generation_config=genai.GenerationConfig(
