@@ -10,3 +10,4 @@ def get_timestamps(sub_file, target_sentence):
             return start_time, end_time
             
     raise ValueError(f'Sentence not found in subtitles: {target_sentence}')
+

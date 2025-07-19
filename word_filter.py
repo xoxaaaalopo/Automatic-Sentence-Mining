@@ -227,6 +227,20 @@ if __name__ == '__main__':
     with open('anki_data.pkl', 'wb') as file:
         pickle.dump(final_sentences, file)
 
+def run_word_filter_pipeline(sub_file, user_word_file, english_dict_file):
+    english_dict = load_dic_set(english_dict_file)
+
+    filtered_user_words = filter_user_words(user_word_file, english_dict)
+    filtered_sub_words = filter_sub_words(sub_file)
+
+    words = get_potential_learning_words(filtered_user_words, filtered_sub_words, english_dict)
+
+    final_words = ast.literal_eval(filter_with_gemini(words))
+    final_sentences = find_sentences_with_potential_words(sub_file, final_words)
+
+    with open('anki_data.pkl', 'wb') as file:
+        pickle.dump(final_sentences, file)
+
 
 
 # ========== Embedding Code (Archived) =============
